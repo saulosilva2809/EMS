@@ -1,7 +1,6 @@
 amqp==5.3.1
 asgiref==3.9.1
 billiard==4.2.1
-black==25.1.0
 celery==5.5.3
 cfgv==3.4.0
 click==8.2.1
@@ -17,7 +16,6 @@ filelock==3.19.1
 flower==2.0.1
 humanize==4.12.3
 identify==2.6.13
-isort==6.0.1
 kombu==5.5.4
 mypy_extensions==1.1.0
 nodeenv==1.9.1
