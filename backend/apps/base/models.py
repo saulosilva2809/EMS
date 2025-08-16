@@ -1,3 +1,7 @@
+import uuid
+
 from django.db import models
 
-# Create your models here.
+
+class BaseModel(models.Model):
+    code = models.UUIDField(default=uuid.uuid4())
