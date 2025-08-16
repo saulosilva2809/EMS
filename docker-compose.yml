@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    hostname: redis
+    container_name: ems_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  web:
+    build: .
+    hostname: web
+    container_name: ems_web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=your-secret-key-here
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  celery_worker:
+    build: .
+    hostname: celery_worker
+    container_name: ems_celery_worker
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - ./backend:/app
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=your-secret-key-here
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  flower:
+    build: .
+    hostname: flower
+    container_name: ems_flower
+    command: celery -A core flower --port=5555
+    volumes:
+      - ./backend:/app
+    ports:
+      - "5555:5555"
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=your-secret-key-here
+    depends_on:
+      - redis
+      - celery_worker
+    restart: unless-stopped
+
+volumes:
+  redis_data:
