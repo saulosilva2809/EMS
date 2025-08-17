@@ -19,7 +19,7 @@ COPY backend/ /app/
 
 RUN adduser --disabled-password --gecos '' appuser
 RUN chown -R appuser:appuser /app
-USER appuser
+RUN chmod -R 755 /app
 
 EXPOSE 8000
 
