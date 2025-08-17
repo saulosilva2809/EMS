@@ -17,9 +17,10 @@ services:
       - db_data:/app/data
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
       - DEBUG=1
-      - SECRET_KEY=your-secret-key-here
     depends_on:
       - redis
     restart: unless-stopped
@@ -32,9 +33,10 @@ services:
     volumes:
       - ./backend:/app
       - db_data:/app/data
+    env_file:
+      - .env
     environment:
       - DEBUG=1
-      - SECRET_KEY=your-secret-key-here
     depends_on:
       - redis
     restart: unless-stopped
@@ -49,9 +51,10 @@ services:
       - db_data:/app/data
     ports:
       - "5555:5555"
+    env_file:
+      - .env
     environment:
       - DEBUG=1
-      - SECRET_KEY=your-secret-key-here
     depends_on:
       - redis
       - celery_worker
