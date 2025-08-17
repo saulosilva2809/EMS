@@ -23,6 +23,6 @@ class User(AbstractUser):
         ("cto", "CTO"),
     ]
 
-    type = models.CharField(max_length=8, choices=TYPE_CHOICES)
-    company = models.OneToOneField(Company, on_delete=models.PROTECT, null=True)
-    cargo = models.CharField(max_length=30, choices=CARGO_CHOICES)
+    type = models.CharField(max_length=8, choices=TYPE_CHOICES, null=True, blank=True)
+    company = models.OneToOneField(Company, on_delete=models.PROTECT, null=True, blank=True)
+    cargo = models.CharField(max_length=30, choices=CARGO_CHOICES, null=True, blank=True)
